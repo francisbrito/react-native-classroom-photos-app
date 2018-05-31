@@ -5,11 +5,18 @@
  */
 
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 import { CourseListScreen } from './src/components';
+import { rootReducer } from './src/reducers';
+
+const store = createStore(rootReducer);
 
 const App = () => (
-  <CourseListScreen />
+  <Provider store={store}>
+    <CourseListScreen />
+  </Provider>
 );
 
 export default App;
