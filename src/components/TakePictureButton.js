@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableNativeFeedback, View, Image, ViewPropTypes } from 'react-native';
+import PropTypes from 'prop-types';
 
 import * as icons from '../icons';
 import * as colors from '../colors';
@@ -18,9 +19,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const ActionButton = ({ containerStyle }) => (
+const ActionButton = ({ containerStyle, onPress }) => (
   <View style={[styles.container, containerStyle]}>
-    <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#fff', true)}>
+    <TouchableNativeFeedback
+      onPress={onPress}
+      background={TouchableNativeFeedback.Ripple('#fff', true)}
+    >
       <View style={[styles.button, { backgroundColor: colors.ACCENT_COLOR }]}>
         <Image source={icons.PICTURE_ICON} />
       </View>
@@ -30,10 +34,12 @@ const ActionButton = ({ containerStyle }) => (
 
 ActionButton.propTypes = {
   containerStyle: ViewPropTypes.style,
+  onPress: PropTypes.func,
 };
 
 ActionButton.defaultProps = {
   containerStyle: null,
+  onPress: () => {},
 };
 
 export default ActionButton;

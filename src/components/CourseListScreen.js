@@ -1,10 +1,7 @@
 /* @flow weak */
 
-import React from 'react';
-import {
-  View,
-  StyleSheet,
-} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
 
 import { CourseList, TakePictureButton } from '.';
 
@@ -26,26 +23,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const CourseListScreen = ({ courses }) => (
-  <View style={styles.container}>
-    <View style={styles.courseListContainer}>
-      <CourseList courses={courses} />
-    </View>
-    <View style={styles.takePictureButtonContainer}>
-      <TakePictureButton containerStyle={styles.takePictureButton} />
-    </View>
-  </View>
-);
+export default class CourseListScreen extends Component {
+  static navigationOptions = {
+    headerTitle: 'Courses',
+  };
+  static propTypes = {
+    courses: CourseList.propTypes.courses,
+  };
+  static defaultProps = {
+    courses: [],
+  };
 
-CourseListScreen.navigationOptions = {
-  headerTitle: 'Courses',
-};
+  handleGoToTakePictureScreen = () => {
+    this.props.navigation.navigate('TakePicture');
+  }
 
-CourseListScreen.propTypes = {
-  courses: CourseList.propTypes.courses,
-};
-CourseListScreen.defaultProps = {
-  courses: [],
-};
+  render() {
+    const { courses } = this.props;
 
-export default CourseListScreen;
+    return (
+      <View style={styles.container}>
+        <View style={styles.courseListContainer}>
+          <CourseList courses={courses} />
+        </View>
+        <View style={styles.takePictureButtonContainer}>
+          <TakePictureButton
+            onPress={this.handleGoToTakePictureScreen}
+            containerStyle={styles.takePictureButton}
+          />
+        </View>
+      </View>
+    );
+  }
+}

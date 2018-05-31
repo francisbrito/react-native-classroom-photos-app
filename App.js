@@ -9,7 +9,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { createStackNavigator } from 'react-navigation';
 
-import { CourseListScreen } from './src/components';
+import { CourseListScreen, TakePictureScreen } from './src/components';
 import { rootReducer } from './src/reducers';
 import * as colors from './src/colors';
 
@@ -18,6 +18,7 @@ const store = createStore(rootReducer);
 const RootNavigator = createStackNavigator(
   {
     CourseList: { screen: CourseListScreen },
+    TakePicture: { screen: TakePictureScreen },
   },
   {
     initialRoute: 'CourseList',
@@ -28,6 +29,7 @@ const RootNavigator = createStackNavigator(
       headerTitleStyle: {
         color: colors.TEXT_COLOR,
       },
+      headerTintColor: colors.TEXT_COLOR,
     },
   },
 );
