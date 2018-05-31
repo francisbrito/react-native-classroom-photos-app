@@ -26,15 +26,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const CourseListScreen = () => (
+const CourseListScreen = ({ courses }) => (
   <View style={styles.container}>
     <View style={styles.courseListContainer}>
-      <CourseList />
+      <CourseList courses={courses} />
     </View>
     <View style={styles.takePictureButtonContainer}>
       <TakePictureButton containerStyle={styles.takePictureButton} />
     </View>
   </View>
 );
+
+CourseListScreen.propTypes = {
+  courses: CourseList.propTypes.courses,
+};
+CourseListScreen.defaultProps = {
+  courses: [],
+};
 
 export default CourseListScreen;
