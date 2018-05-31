@@ -7,10 +7,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { TakePictureButton } from './src/components';
+import { CourseList, TakePictureButton } from './src/components';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  takePictureButtonContainer: {
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -18,11 +22,19 @@ const styles = StyleSheet.create({
   takePictureButton: {
     marginBottom: 16,
   },
+  courseListContainer: {
+    flex: 1,
+  },
 });
 
 const App = () => (
   <View style={styles.container}>
-    <TakePictureButton containerStyle={styles.takePictureButton} />
+    <View style={styles.courseListContainer}>
+      <CourseList />
+    </View>
+    <View style={styles.takePictureButtonContainer}>
+      <TakePictureButton containerStyle={styles.takePictureButton} />
+    </View>
   </View>
 );
 
