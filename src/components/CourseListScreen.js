@@ -37,6 +37,10 @@ const CourseListScreen = ({ courses }) => (
   </View>
 );
 
+CourseListScreen.navigationOptions = {
+  headerTitle: 'Courses',
+};
+
 CourseListScreen.propTypes = {
   courses: CourseList.propTypes.courses,
 };
