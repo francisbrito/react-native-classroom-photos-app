@@ -123,7 +123,6 @@ export default class TakePictureScreen extends Component {
           ref={this.registerCameraRef}
           style={styles.camera}
           type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
           permissionDialogTitle="Permission to use camera"
           permissionDialogMessage="We need your permission to use your camera phone"
         />

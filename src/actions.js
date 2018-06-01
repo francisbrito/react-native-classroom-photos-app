@@ -10,6 +10,6 @@ export const takePicture = ({ camera }) => (dispatch) => {
   dispatch(takePictureStarted());
 
   camera
-    .takePictureAsync({ mirrorImage: true })
+    .takePictureAsync({ width: 360, skipProcessing: true })
     .then(({ uri }) => dispatch(takePictureDone({ uri })));
 };
