@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const ActionButton = ({ containerStyle, onPress }) => (
+const ActionButton = ({ style, containerStyle, onPress }) => (
   <View style={[styles.container, containerStyle]}>
     <TouchableNativeFeedback
       onPress={onPress}
       background={TouchableNativeFeedback.Ripple('#fff', true)}
     >
-      <View style={[styles.button, { backgroundColor: colors.ACCENT_COLOR }]}>
+      <View style={[styles.button, { backgroundColor: colors.ACCENT_COLOR }, style]}>
         <Image source={icons.PICTURE_ICON} />
       </View>
     </TouchableNativeFeedback>
@@ -33,11 +33,13 @@ const ActionButton = ({ containerStyle, onPress }) => (
 );
 
 ActionButton.propTypes = {
+  style: ViewPropTypes.style,
   containerStyle: ViewPropTypes.style,
   onPress: PropTypes.func,
 };
 
 ActionButton.defaultProps = {
+  style: null,
   containerStyle: null,
   onPress: () => {},
 };
