@@ -5,15 +5,17 @@
  */
 
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { createStackNavigator } from 'react-navigation';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 import { CourseListScreen, TakePictureScreen } from './src/components';
 import { rootReducer } from './src/reducers';
 import * as colors from './src/colors';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 const RootNavigator = createStackNavigator(
   {

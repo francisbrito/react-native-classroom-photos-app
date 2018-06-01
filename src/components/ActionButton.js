@@ -2,13 +2,9 @@ import React from 'react';
 import { StyleSheet, TouchableNativeFeedback, View, Image, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
-import * as icons from '../icons';
-import * as colors from '../colors';
-
 const styles = StyleSheet.create({
   container: {
     borderRadius: 56,
-    elevation: 5,
   },
   button: {
     height: 56,
@@ -19,25 +15,33 @@ const styles = StyleSheet.create({
   },
 });
 
-const ActionButton = ({ containerStyle, onPress }) => (
+const ActionButton = ({
+  icon, iconStyle, style, containerStyle, onPress,
+}) => (
   <View style={[styles.container, containerStyle]}>
     <TouchableNativeFeedback
       onPress={onPress}
       background={TouchableNativeFeedback.Ripple('#fff', true)}
     >
-      <View style={[styles.button, { backgroundColor: colors.ACCENT_COLOR }]}>
-        <Image source={icons.PICTURE_ICON} />
+      <View style={[styles.button, style]}>
+        <Image style={iconStyle} source={icon} />
       </View>
     </TouchableNativeFeedback>
   </View>
 );
 
 ActionButton.propTypes = {
+  icon: PropTypes.number,
+  iconStyle: ViewPropTypes.style,
+  style: ViewPropTypes.style,
   containerStyle: ViewPropTypes.style,
   onPress: PropTypes.func,
 };
 
 ActionButton.defaultProps = {
+  icon: null,
+  iconStyle: null,
+  style: null,
   containerStyle: null,
   onPress: () => {},
 };
