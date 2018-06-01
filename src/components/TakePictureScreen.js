@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../actions';
+import * as icons from '../icons';
 
-import { TakePictureButton } from '.';
+import { ActionButton } from '.';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +35,21 @@ const styles = StyleSheet.create({
     borderRadius: 56,
   },
   confirmationViewButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingBottom: 16,
+  },
+  confirmationViewButton: {
+    width: 72,
+    height: 72,
+    borderRadius: 72,
+  },
+  confirmationButtonIcon: {
+    width: 36,
+    height: 36,
   },
 });
 
@@ -84,7 +99,18 @@ export default class TakePictureScreen extends Component {
       <Image style={styles.container} source={{ uri: this.props.uri }} />
       <View
         style={[styles.container, styles.confirmationViewButtonsContainer, StyleSheet.absoluteFill]}
-      />
+      >
+        <ActionButton
+          iconStyle={styles.confirmationButtonIcon}
+          style={styles.confirmationViewButton}
+          icon={icons.CANCEL_ICON}
+        />
+        <ActionButton
+          iconStyle={styles.confirmationButtonIcon}
+          style={styles.confirmationViewButton}
+          icon={icons.ACCEPT_ICON}
+        />
+      </View>
     </View>
   );
 
@@ -102,7 +128,8 @@ export default class TakePictureScreen extends Component {
           permissionDialogMessage="We need your permission to use your camera phone"
         />
         <View style={styles.takePictureButtonContainer}>
-          <TakePictureButton
+          <ActionButton
+            icon={icons.PICTURE_ICON}
             style={styles.takePictureButton}
             onPress={this.handleTakePicture}
             containerStyle={styles.takePictureInnerButtonContainer}

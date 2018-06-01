@@ -3,7 +3,9 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { CourseList, TakePictureButton } from '.';
+import { CourseList, ActionButton } from '.';
+import * as colors from '../colors';
+import * as icons from '../icons';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +19,7 @@ const styles = StyleSheet.create({
   },
   takePictureButton: {
     marginBottom: 16,
+    elevation: 5,
   },
   courseListContainer: {
     flex: 1,
@@ -47,7 +50,9 @@ export default class CourseListScreen extends Component {
           <CourseList courses={courses} />
         </View>
         <View style={styles.takePictureButtonContainer}>
-          <TakePictureButton
+          <ActionButton
+            style={{ backgroundColor: colors.ACCENT_COLOR }}
+            icon={icons.PICTURE_ICON}
             onPress={this.handleGoToTakePictureScreen}
             containerStyle={styles.takePictureButton}
           />
