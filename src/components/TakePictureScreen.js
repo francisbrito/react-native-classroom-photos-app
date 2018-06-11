@@ -103,52 +103,52 @@ export default class TakePictureScreen extends Component {
     this.props.rejectPicture();
   };
 
-  renderPictureConfirmationView = () => (
-    <View style={styles.container}>
-      <Image style={styles.container} source={{ uri: this.props.uri }} />
-      <View
-        style={[styles.container, styles.confirmationViewButtonsContainer, StyleSheet.absoluteFill]}
-      >
-        <ActionButton
-          iconStyle={styles.confirmationButtonIcon}
-          style={styles.confirmationViewButton}
-          icon={icons.CANCEL_ICON}
-          onPress={this.handleRejectPicture}
-        />
-        <ActionButton
-          iconStyle={styles.confirmationButtonIcon}
-          style={styles.confirmationViewButton}
-          icon={icons.ACCEPT_ICON}
-          onPress={this.handleAcceptPicture}
-        />
-      </View>
-    </View>
-  );
+  render() {
+    const { hasTakenPicture } = this.props;
 
-  renderPreview = () =>
-    (this.props.hasTakenPicture ? (
-      this.renderPictureConfirmationView()
-    ) : (
+    return (
       <View style={styles.container}>
-        <RNCamera
-          ref={this.registerCameraRef}
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          permissionDialogTitle="Permission to use camera"
-          permissionDialogMessage="We need your permission to use your camera phone"
-        />
-        <View style={styles.takePictureButtonContainer}>
-          <ActionButton
-            icon={icons.PICTURE_ICON}
-            style={styles.takePictureButton}
-            onPress={this.handleTakePicture}
-            containerStyle={styles.takePictureInnerButtonContainer}
+        <View style={hasTakenPicture ? { flex: 1 } : { height: 0 }}>
+          <Image style={styles.container} source={{ uri: this.props.uri }} />
+          <View
+            style={[
+              styles.container,
+              styles.confirmationViewButtonsContainer,
+              StyleSheet.absoluteFill,
+            ]}
+          >
+            <ActionButton
+              iconStyle={styles.confirmationButtonIcon}
+              style={styles.confirmationViewButton}
+              icon={icons.CANCEL_ICON}
+              onPress={this.handleRejectPicture}
+            />
+            <ActionButton
+              iconStyle={styles.confirmationButtonIcon}
+              style={styles.confirmationViewButton}
+              icon={icons.ACCEPT_ICON}
+              onPress={this.handleAcceptPicture}
+            />
+          </View>
+        </View>
+        <View style={hasTakenPicture ? { height: 0 } : { flex: 1 }}>
+          <RNCamera
+            ref={this.registerCameraRef}
+            style={styles.camera}
+            type={RNCamera.Constants.Type.back}
+            permissionDialogTitle="Permission to use camera"
+            permissionDialogMessage="We need your permission to use your camera phone"
           />
+          <View style={styles.takePictureButtonContainer}>
+            <ActionButton
+              icon={icons.PICTURE_ICON}
+              style={styles.takePictureButton}
+              onPress={this.handleTakePicture}
+              containerStyle={styles.takePictureInnerButtonContainer}
+            />
+          </View>
         </View>
       </View>
-    ));
-
-  render() {
-    return <View style={styles.container}>{this.renderPreview()}</View>;
+    );
   }
 }
