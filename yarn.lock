@@ -4887,9 +4887,9 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-native-camera@^1.1.4:
+"react-native-camera@https://github.com/react-native-community/react-native-camera.git#master":
   version "1.1.4"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.1.4.tgz#5a01be906507cc2f232405f903c52c9d99988dba"
+  resolved "https://github.com/react-native-community/react-native-camera.git#35d962668cd092f9a1b45d7cd41033baade1325e"
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
