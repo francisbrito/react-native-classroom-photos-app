@@ -22,6 +22,8 @@ export const cameraReducer = (state = {}, action) => {
       return { ...state, hasTakenPicture: false };
     case Types.TAKE_PICTURE_DONE:
       return { ...state, hasTakenPicture: true, uri: action.payload.uri };
+    case Types.REJECT_PICTURE:
+      return { ...state, hasTakenPicture: false, uri: null };
     default:
       return state;
   }

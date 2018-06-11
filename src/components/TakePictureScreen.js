@@ -54,10 +54,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ camera }) => ({ ...camera });
-const mapDispatchToProps = {
-  takePicture: actions.takePicture,
-  takePictureStarted: actions.takePictureStarted,
-};
+const mapDispatchToProps = { ...actions };
 
 @connect(
   mapStateToProps,
@@ -73,6 +70,8 @@ export default class TakePictureScreen extends Component {
     takePicture: PropTypes.func,
     takePictureStarted: PropTypes.func,
     uri: PropTypes.string,
+    acceptPicture: PropTypes.func,
+    rejectPicture: PropTypes.func,
   };
 
   static defaultProps = {
@@ -80,6 +79,8 @@ export default class TakePictureScreen extends Component {
     takePicture: () => {},
     takePictureStarted: () => {},
     uri: null,
+    acceptPicture: () => {},
+    rejectPicture: () => {},
   };
 
   componentDidMount() {
@@ -94,6 +95,14 @@ export default class TakePictureScreen extends Component {
     this.props.takePicture({ camera: this.camera });
   };
 
+  handleAcceptPicture = () => {
+    this.props.acceptPicture();
+  };
+
+  handleRejectPicture = () => {
+    this.props.rejectPicture();
+  };
+
   renderPictureConfirmationView = () => (
     <View style={styles.container}>
       <Image style={styles.container} source={{ uri: this.props.uri }} />
@@ -104,11 +113,13 @@ export default class TakePictureScreen extends Component {
           iconStyle={styles.confirmationButtonIcon}
           style={styles.confirmationViewButton}
           icon={icons.CANCEL_ICON}
+          onPress={this.handleRejectPicture}
         />
         <ActionButton
           iconStyle={styles.confirmationButtonIcon}
           style={styles.confirmationViewButton}
           icon={icons.ACCEPT_ICON}
+          onPress={this.handleAcceptPicture}
         />
       </View>
     </View>
