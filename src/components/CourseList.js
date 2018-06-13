@@ -25,6 +25,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.SECONDARY_TEXT_COLOR,
   },
+  courseListContainer: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+  },
+  courseListColumnWrapper: {
+    justifyContent: 'space-between',
+  },
+  evenPositionItem: {
+    marginRight: 4,
+  },
+  oddPositionItem: {
+    marginLeft: 4,
+  },
 });
 
 const coursePropType = PropTypes.shape({
@@ -32,10 +47,19 @@ const coursePropType = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
-const renderItem = ({ item }) => <Course key={item.id} {...item} />;
+const renderItem = ({ item, index }) => (
+  <Course
+    {...item}
+    containerStyle={[
+      { marginTop: 4, marginBottom: 4 },
+      index % 2 === 0 ? styles.evenPositionItem : styles.oddPositionItem,
+    ]}
+  />
+);
 
 renderItem.propTypes = {
   item: coursePropType.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 const renderEmptyCourseList = () => (
@@ -52,7 +76,14 @@ const renderEmptyCourseList = () => (
 const CourseList = ({ courses }) => (
   <View style={styles.container}>
     {courses.length > 0 ? (
-      <FlatList data={courses} renderItem={renderItem} numColumns={2} />
+      <FlatList
+        columnWrapperStyle={styles.courseListColumnWrapper}
+        contentContainerStyle={styles.courseListContainer}
+        data={courses}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={2}
+      />
     ) : (
       renderEmptyCourseList()
     )}

@@ -1,7 +1,9 @@
 /* @flow weak */
 
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { CourseList, ActionButton } from '.';
 import * as colors from '../colors';
@@ -26,12 +28,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = ({ courses }) => ({ courses });
+
+@connect(mapStateToProps)
 export default class CourseListScreen extends Component {
   static navigationOptions = {
     headerTitle: 'Courses',
   };
   static propTypes = {
     courses: CourseList.propTypes.courses,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   };
   static defaultProps = {
     courses: [],
@@ -46,6 +54,7 @@ export default class CourseListScreen extends Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor={colors.DARK_PRIMARY_COLOR} />
         <View style={styles.courseListContainer}>
           <CourseList courses={courses} />
         </View>
