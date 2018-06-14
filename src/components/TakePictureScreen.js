@@ -1,13 +1,14 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, StatusBar } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../actions';
 import * as icons from '../icons';
+import * as colors from '../colors';
 
 import { ActionButton } from '.';
 
@@ -92,52 +93,31 @@ export default class TakePictureScreen extends Component {
 
   handleTakePicture = () => {
     this.props.takePicture({ camera: this.camera });
+    this.props.navigation.navigate('SavePicture');
   };
 
-  renderPictureConfirmationView = () => (
-    <View style={styles.container}>
-      <Image style={styles.container} source={{ uri: this.props.uri }} />
-      <View
-        style={[styles.container, styles.confirmationViewButtonsContainer, StyleSheet.absoluteFill]}
-      >
-        <ActionButton
-          iconStyle={styles.confirmationButtonIcon}
-          style={styles.confirmationViewButton}
-          icon={icons.CANCEL_ICON}
-        />
-        <ActionButton
-          iconStyle={styles.confirmationButtonIcon}
-          style={styles.confirmationViewButton}
-          icon={icons.ACCEPT_ICON}
-        />
-      </View>
-    </View>
-  );
-
-  renderPreview = () =>
-    (this.props.hasTakenPicture ? (
-      this.renderPictureConfirmationView()
-    ) : (
+  render() {
+    return (
       <View style={styles.container}>
-        <RNCamera
-          ref={this.registerCameraRef}
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          permissionDialogTitle="Permission to use camera"
-          permissionDialogMessage="We need your permission to use your camera phone"
-        />
-        <View style={styles.takePictureButtonContainer}>
-          <ActionButton
-            icon={icons.PICTURE_ICON}
-            style={styles.takePictureButton}
-            onPress={this.handleTakePicture}
-            containerStyle={styles.takePictureInnerButtonContainer}
+        <StatusBar backgroundColor="transparent" translucent animated />
+        <View style={styles.container}>
+          <RNCamera
+            ref={this.registerCameraRef}
+            style={styles.camera}
+            type={RNCamera.Constants.Type.back}
+            permissionDialogTitle="Permission to use camera"
+            permissionDialogMessage="We need your permission to use your camera phone"
           />
+          <View style={styles.takePictureButtonContainer}>
+            <ActionButton
+              icon={icons.PICTURE_ICON}
+              style={styles.takePictureButton}
+              onPress={this.handleTakePicture}
+              containerStyle={styles.takePictureInnerButtonContainer}
+            />
+          </View>
         </View>
       </View>
-    ));
-
-  render() {
-    return <View style={styles.container}>{this.renderPreview()}</View>;
+    );
   }
 }

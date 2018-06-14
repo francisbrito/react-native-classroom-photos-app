@@ -54,7 +54,7 @@ export default class CourseListScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.DARK_PRIMARY_COLOR} />
+        <StatusBar animated barStyle="light-content" backgroundColor={colors.DARK_PRIMARY_COLOR} />
         <View style={styles.courseListContainer}>
           <CourseList courses={courses} />
         </View>

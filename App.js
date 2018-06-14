@@ -11,7 +11,7 @@ import { createStackNavigator } from 'react-navigation';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import { CourseListScreen, TakePictureScreen } from './src/components';
+import { CourseListScreen, TakePictureScreen, SavePictureScreen } from './src/components';
 import { rootReducer } from './src/reducers';
 import * as colors from './src/colors';
 
@@ -21,6 +21,7 @@ const RootNavigator = createStackNavigator(
   {
     CourseList: { screen: CourseListScreen },
     TakePicture: { screen: TakePictureScreen },
+    SavePicture: { screen: SavePictureScreen },
   },
   {
     initialRoute: 'CourseList',
