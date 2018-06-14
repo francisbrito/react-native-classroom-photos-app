@@ -67,12 +67,22 @@ export const pictureReducer = (state = [], action) => {
   }
 };
 
-export const cameraReducer = (state = {}, action) => {
+const initialCamera = {
+  pictureSaved: false,
+  hasTakenPicture: false,
+  uri: null,
+};
+
+export const cameraReducer = (state = initialCamera, action) => {
   switch (action.type) {
     case Types.TAKE_PICTURE_STARTED:
       return { ...state, hasTakenPicture: false };
     case Types.TAKE_PICTURE_DONE:
       return { ...state, hasTakenPicture: true, uri: action.payload.uri };
+    case Types.CLEAR_PICTURE:
+      return {
+        ...state, hasTakenPicture: false, pictureSaved: false, uri: null,
+      };
     default:
       return state;
   }

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { ActionButton } from '.';
 import * as icons from '../icons';
 import * as colors from '../colors';
+import * as actions from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,21 +41,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ camera }) => ({ pictureUri: camera.uri });
+const mapStateToProps = ({ camera }) => ({ ...camera, pictureUri: camera.uri });
+const mapDispatchToProps = {
+  clearPicture: actions.clearPicture,
+};
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 class PictureDetailScreen extends Component {
   static navigationOptions = { header: null };
 
   static propTypes = {
+    pictureSaved: PropTypes.bool,
     pictureUri: PropTypes.string,
+    clearPicture: PropTypes.func,
   };
 
   static defaultProps = {
+    pictureSaved: false,
     pictureUri: null,
+    clearPicture: () => {},
   };
 
   componentWillUnmount() {
+    if (!this.props.pictureSaved) {
+      this.props.clearPicture();
+    }
   }
 
   render() {
