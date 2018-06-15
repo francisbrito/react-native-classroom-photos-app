@@ -7,6 +7,7 @@ export const Types = mirror([
   'TAKE_PICTURE',
   'CLEAR_PICTURE',
   'SAVE_PICTURE',
+  'CHANGE_COURSE_TAG',
 ]);
 
 export const takePictureStarted = createAction(Types.TAKE_PICTURE_STARTED);
@@ -22,3 +23,4 @@ export const takePicture = ({ camera }) => (dispatch) => {
 
 export const clearPicture = createAction(Types.CLEAR_PICTURE);
 export const savePicture = createAction(Types.SAVE_PICTURE, () => ({ timestamp: Date.now() }));
+export const changeCourseTag = createAction(Types.CHANGE_COURSE_TAG, courseTag => ({ courseTag }));

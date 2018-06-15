@@ -94,6 +94,11 @@ export const cameraReducer = (state = initialCamera, action) => {
         pictureSaved: true,
         timestamp: action.payload.timestamp,
       };
+    case Types.CHANGE_COURSE_TAG:
+      return {
+        ...state,
+        courseTag: action.payload.courseTag,
+      };
     default:
       return state;
   }
