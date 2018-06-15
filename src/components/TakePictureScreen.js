@@ -99,7 +99,7 @@ export default class TakePictureScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="transparent" translucent animated />
+        <StatusBar backgroundColor="#000" animated />
         <View style={styles.container}>
           <RNCamera
             ref={this.registerCameraRef}

@@ -71,6 +71,7 @@ const initialCamera = {
   pictureSaved: false,
   hasTakenPicture: false,
   uri: null,
+  timestamp: null,
 };
 
 export const cameraReducer = (state = initialCamera, action) => {
@@ -81,7 +82,17 @@ export const cameraReducer = (state = initialCamera, action) => {
       return { ...state, hasTakenPicture: true, uri: action.payload.uri };
     case Types.CLEAR_PICTURE:
       return {
-        ...state, hasTakenPicture: false, pictureSaved: false, uri: null,
+        ...state,
+        hasTakenPicture: false,
+        pictureSaved: false,
+        uri: null,
+      };
+    case Types.SAVE_PICTURE:
+      return {
+        ...state,
+        hasTakenPicture: true,
+        pictureSaved: true,
+        timestamp: action.payload.timestamp,
       };
     default:
       return state;

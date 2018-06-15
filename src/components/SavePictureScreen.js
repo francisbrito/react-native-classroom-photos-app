@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ camera }) => ({ ...camera, pictureUri: camera.uri });
 const mapDispatchToProps = {
   clearPicture: actions.clearPicture,
+  savePicture: actions.savePicture,
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -54,12 +55,14 @@ class PictureDetailScreen extends Component {
     pictureSaved: PropTypes.bool,
     pictureUri: PropTypes.string,
     clearPicture: PropTypes.func,
+    savePicture: PropTypes.func,
   };
 
   static defaultProps = {
     pictureSaved: false,
     pictureUri: null,
     clearPicture: () => {},
+    savePicture: () => {},
   };
 
   componentWillUnmount() {
@@ -68,12 +71,17 @@ class PictureDetailScreen extends Component {
     }
   }
 
+  handleSavePicture = () => {
+    this.props.savePicture();
+    this.props.navigation.navigate('CourseList');
+  }
+
   render() {
     const { pictureUri } = this.props;
 
     return (
       <View style={styles.container}>
-        <StatusBar translucent animated backgroundColor="transparent" />
+        <StatusBar animated backgroundColor="#000" />
         <Image style={styles.picture} source={{ uri: pictureUri }} />
         <View style={styles.controlsContainer} enabled behavior="padding">
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
@@ -82,6 +90,7 @@ class PictureDetailScreen extends Component {
                 containerStyle={{ zIndex: 999, elevation: 2 }}
                 style={styles.confirmButton}
                 icon={icons.ACCEPT_ICON}
+                onPress={this.handleSavePicture}
               />
             </View>
             <View style={styles.controlsContainerBackground}>
