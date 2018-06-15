@@ -99,6 +99,11 @@ export const cameraReducer = (state = initialCamera, action) => {
         ...state,
         courseTag: action.payload.courseTag,
       };
+    case Types.CHANGE_CAPTION:
+      return {
+        ...state,
+        caption: action.payload.caption,
+      };
     default:
       return state;
   }

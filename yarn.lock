@@ -3989,6 +3989,10 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+"mention-hashtag@https://github.com/francisbrito/mention-hashtag":
+  version "1.1.0"
+  resolved "https://github.com/francisbrito/mention-hashtag#adee43841b14a4dd96869e37ae7bea53ba8d9294"
+
 merge-stream@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-1.0.1.tgz#4041202d508a342ba00174008df0c251b8c135e1"

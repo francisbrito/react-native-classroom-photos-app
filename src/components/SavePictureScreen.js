@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, TextInput, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import parseText from 'mention-hashtag';
 
 import { ActionButton } from '.';
 import * as icons from '../icons';
@@ -41,15 +42,18 @@ const styles = StyleSheet.create({
   },
 });
 
+// TODO: support multiple hash-tags
+const getCourseTagFromCaption = text => parseText(text, '#')[0];
+
 const mapStateToProps = ({ camera }) => ({
   ...camera,
   pictureUri: camera.uri,
-  canSave: !!camera.courseTag && camera.courseTag.length > 0,
 });
 const mapDispatchToProps = {
   clearPicture: actions.clearPicture,
   savePicture: actions.savePicture,
   changeCourseTag: actions.changeCourseTag,
+  changeCaption: actions.changeCaption,
 };
 
 @connect(
@@ -69,7 +73,8 @@ class PictureDetailScreen extends Component {
     }).isRequired,
     courseTag: PropTypes.string,
     changeCourseTag: PropTypes.func,
-    canSave: PropTypes.bool,
+    caption: PropTypes.string,
+    changeCaption: PropTypes.func,
   };
 
   static defaultProps = {
@@ -77,9 +82,10 @@ class PictureDetailScreen extends Component {
     pictureUri: null,
     clearPicture: () => {},
     savePicture: () => {},
-    courseTag: null,
+    courseTag: 'Untagged',
     changeCourseTag: () => {},
-    canSave: false,
+    caption: null,
+    changeCaption: () => {},
   };
 
   componentWillUnmount() {
@@ -93,12 +99,19 @@ class PictureDetailScreen extends Component {
     this.props.navigation.navigate('CourseDetail', { courseTag: this.props.courseTag });
   };
 
-  handleChangeCourseTag = (newTag) => {
-    this.props.changeCourseTag(newTag);
+  handleChangeCaption = (caption) => {
+    const courseTag =
+      getCourseTagFromCaption(caption) || PictureDetailScreen.defaultProps.courseTag;
+
+    if (courseTag) {
+      this.props.changeCourseTag(courseTag);
+    }
+
+    this.props.changeCaption(caption);
   };
 
   render() {
-    const { pictureUri, courseTag, canSave } = this.props;
+    const { pictureUri, caption } = this.props;
 
     return (
       <View style={styles.container}>
@@ -106,16 +119,14 @@ class PictureDetailScreen extends Component {
         <Image style={styles.picture} source={{ uri: pictureUri }} />
         <View style={styles.controlsContainer}>
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-            {canSave && (
-              <View style={styles.confirmButtonContainer}>
-                <ActionButton
-                  containerStyle={{ zIndex: 999, elevation: 2 }}
-                  style={styles.confirmButton}
-                  icon={icons.ACCEPT_ICON}
-                  onPress={this.handleSavePicture}
-                />
-              </View>
-            )}
+            <View style={styles.confirmButtonContainer}>
+              <ActionButton
+                containerStyle={{ zIndex: 999, elevation: 2 }}
+                style={styles.confirmButton}
+                icon={icons.ACCEPT_ICON}
+                onPress={this.handleSavePicture}
+              />
+            </View>
             <View style={styles.controlsContainerBackground}>
               <TextInput
                 autoCapitalize="sentences"
@@ -123,8 +134,8 @@ class PictureDetailScreen extends Component {
                 placeholder="Add a caption..."
                 style={styles.captionInput}
                 underlineColorAndroid="transparent"
-                value={courseTag}
-                onChangeText={this.handleChangeCourseTag}
+                value={caption}
+                onChangeText={this.handleChangeCaption}
               />
             </View>
           </View>
