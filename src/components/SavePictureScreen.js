@@ -82,7 +82,7 @@ class PictureDetailScreen extends Component {
     pictureUri: null,
     clearPicture: () => {},
     savePicture: () => {},
-    courseTag: 'Untagged',
+    courseTag: '#untagged',
     changeCourseTag: () => {},
     caption: null,
     changeCaption: () => {},
@@ -95,8 +95,14 @@ class PictureDetailScreen extends Component {
   }
 
   handleSavePicture = () => {
-    this.props.savePicture();
-    this.props.navigation.navigate('CourseDetail', { courseTag: this.props.courseTag });
+    const { pictureUri: uri, caption, courseTag } = this.props;
+
+    this.props.savePicture({
+      uri,
+      caption,
+      courseTag,
+    });
+    this.props.navigation.navigate('CourseDetail', { courseTag });
   };
 
   handleChangeCaption = (caption) => {

@@ -1,4 +1,5 @@
 import { AppRegistry, YellowBox } from 'react-native';
+import './ReactotronConfig';
 import App from './App';
 
 // HACK: Ignore `isMounted` warning until patch is pushed to `react-native@stable`

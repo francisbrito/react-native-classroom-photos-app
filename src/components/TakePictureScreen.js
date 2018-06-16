@@ -1,14 +1,13 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, StatusBar } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../actions';
 import * as icons from '../icons';
-import * as colors from '../colors';
 
 import { ActionButton } from '.';
 
@@ -70,17 +69,16 @@ export default class TakePictureScreen extends Component {
   };
 
   static propTypes = {
-    hasTakenPicture: PropTypes.bool,
     takePicture: PropTypes.func,
     takePictureStarted: PropTypes.func,
-    uri: PropTypes.string,
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
-    hasTakenPicture: false,
     takePicture: () => {},
     takePictureStarted: () => {},
-    uri: null,
   };
 
   componentDidMount() {

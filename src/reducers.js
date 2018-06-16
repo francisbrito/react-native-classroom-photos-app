@@ -2,59 +2,15 @@ import { combineReducers } from 'redux';
 
 import { Types } from './actions';
 
-const initialCourses = [
-  {
-    id: '1',
-    name: 'ACM101',
-  },
-  {
-    id: '2',
-    name: 'ACM102',
-  },
-  {
-    id: '3',
-    name: 'ACM103',
-  },
-  {
-    id: '4',
-    name: 'CBM101',
-  },
-  {
-    id: '5',
-    name: 'CBM102',
-  },
-  {
-    id: '6',
-    name: 'GCM101',
-  },
-  {
-    id: '11',
-    name: 'ACM101',
-  },
-  {
-    id: '12',
-    name: 'ACM102',
-  },
-  {
-    id: '13',
-    name: 'ACM103',
-  },
-  {
-    id: '14',
-    name: 'CBM101',
-  },
-  {
-    id: '15',
-    name: 'CBM102',
-  },
-  {
-    id: '16',
-    name: 'GCM101',
-  },
-];
+const initialCourses = [];
 
 export const courseReducer = (state = initialCourses, action) => {
   switch (action.type) {
+    case Types.SAVE_PICTURE:
+      return [
+        ...state,
+        { id: action.payload.courseTag, tag: action.payload.courseTag, photos: [action.payload] },
+      ];
     default:
       return state;
   }
@@ -62,6 +18,8 @@ export const courseReducer = (state = initialCourses, action) => {
 
 export const pictureReducer = (state = [], action) => {
   switch (action.type) {
+    case Types.SAVE_PICTURE:
+      return [action.payload, ...state];
     default:
       return state;
   }
