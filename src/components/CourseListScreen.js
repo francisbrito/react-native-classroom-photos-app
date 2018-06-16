@@ -47,7 +47,11 @@ export default class CourseListScreen extends Component {
 
   handleGoToTakePictureScreen = () => {
     this.props.navigation.navigate('TakePicture');
-  }
+  };
+
+  handleGoToCourseDetail = ({ tag: courseTag }) => {
+    this.props.navigation.navigate('CourseDetail', { courseTag });
+  };
 
   render() {
     const { courses } = this.props;
@@ -56,7 +60,7 @@ export default class CourseListScreen extends Component {
       <View style={styles.container}>
         <StatusBar animated barStyle="light-content" backgroundColor={colors.DARK_PRIMARY_COLOR} />
         <View style={styles.courseListContainer}>
-          <CourseList courses={courses} />
+          <CourseList onSelectCourse={this.handleGoToCourseDetail} courses={courses} />
         </View>
         <View style={styles.takePictureButtonContainer}>
           <ActionButton

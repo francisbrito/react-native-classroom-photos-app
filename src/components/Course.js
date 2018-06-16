@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Course = ({ tag, containerStyle }) => (
-  <TouchableOpacity style={[styles.container, containerStyle]}>
+const Course = ({ tag, containerStyle, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={[styles.container, containerStyle]}>
     <Text style={{ textAlign: 'center' }}>{tag}</Text>
   </TouchableOpacity>
 );
@@ -34,10 +34,12 @@ const Course = ({ tag, containerStyle }) => (
 Course.propTypes = {
   tag: PropTypes.string.isRequired,
   containerStyle: ViewPropTypes.style,
+  onPress: PropTypes.func,
 };
 
 Course.defaultProps = {
   containerStyle: null,
+  onPress: () => {},
 };
 
 export default Course;

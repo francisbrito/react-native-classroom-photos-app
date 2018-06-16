@@ -47,21 +47,6 @@ const coursePropType = PropTypes.shape({
   id: PropTypes.string.isRequired,
 });
 
-const renderItem = ({ item, index }) => (
-  <Course
-    {...item}
-    containerStyle={[
-      { marginTop: 4, marginBottom: 4 },
-      index % 2 === 0 ? styles.evenPositionItem : styles.oddPositionItem,
-    ]}
-  />
-);
-
-renderItem.propTypes = {
-  item: coursePropType.isRequired,
-  index: PropTypes.number.isRequired,
-};
-
 const renderEmptyCourseList = () => (
   <View style={styles.emptyCourseListContainer}>
     <Image
@@ -73,14 +58,23 @@ const renderEmptyCourseList = () => (
   </View>
 );
 
-const CourseList = ({ courses }) => (
+const CourseList = ({ courses, onSelectCourse }) => (
   <View style={styles.container}>
     {courses.length > 0 ? (
       <FlatList
         columnWrapperStyle={styles.courseListColumnWrapper}
         contentContainerStyle={styles.courseListContainer}
         data={courses}
-        renderItem={renderItem}
+        renderItem={({ item, index }) => (
+          <Course
+            {...item}
+            containerStyle={[
+              { marginTop: 4, marginBottom: 4 },
+              index % 2 === 0 ? styles.evenPositionItem : styles.oddPositionItem,
+            ]}
+            onPress={() => onSelectCourse(item)}
+          />
+        )}
         keyExtractor={item => item.id}
         numColumns={2}
       />
@@ -92,10 +86,12 @@ const CourseList = ({ courses }) => (
 
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(coursePropType),
+  onSelectCourse: PropTypes.func,
 };
 
 CourseList.defaultProps = {
   courses: [],
+  onSelectCourse: () => {},
 };
 
 export default CourseList;

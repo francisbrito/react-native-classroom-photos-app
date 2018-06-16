@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 export default class CourseDetailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('courseTag', 'Untagged'),
+    title: navigation.getParam('courseTag', '#untagged'),
     headerLeft: props => (
       <HeaderBackButton {...props} onPress={() => navigation.popToTop()} />
     ),
