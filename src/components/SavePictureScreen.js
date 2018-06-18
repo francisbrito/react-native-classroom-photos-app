@@ -79,12 +79,12 @@ class PictureDetailScreen extends Component {
 
   static defaultProps = {
     pictureSaved: false,
-    pictureUri: null,
+    pictureUri: '',
     clearPicture: () => {},
     savePicture: () => {},
     courseTag: '#untagged',
     changeCourseTag: () => {},
-    caption: null,
+    caption: '',
     changeCaption: () => {},
   };
 

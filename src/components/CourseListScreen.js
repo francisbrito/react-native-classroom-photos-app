@@ -5,7 +5,7 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { CourseList, ActionButton } from '.';
+import { Course, CourseList, ActionButton } from '.';
 import * as colors from '../colors';
 import * as icons from '../icons';
 
@@ -30,13 +30,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = ({ courses }) => ({ courses });
 
+const convertCoursesMapToList = courseMap =>
+  Object.keys(courseMap).map(tag => ({ ...courseMap[tag], tag, id: tag }));
+
 @connect(mapStateToProps)
 export default class CourseListScreen extends Component {
   static navigationOptions = {
     headerTitle: 'Courses',
   };
   static propTypes = {
-    courses: CourseList.propTypes.courses,
+    courses: PropTypes.objectOf(PropTypes.shape(Course.propTypes)),
     navigation: PropTypes.shape({
       navigate: PropTypes.func.isRequired,
     }).isRequired,
@@ -54,7 +57,7 @@ export default class CourseListScreen extends Component {
   };
 
   render() {
-    const { courses } = this.props;
+    const courses = convertCoursesMapToList(this.props.courses);
 
     return (
       <View style={styles.container}>

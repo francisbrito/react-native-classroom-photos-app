@@ -1,16 +1,20 @@
 import { combineReducers } from 'redux';
+import * as R from 'ramda';
 
 import { Types } from './actions';
 
-const initialCourses = [];
+const initialCourses = {};
 
 export const courseReducer = (state = initialCourses, action) => {
   switch (action.type) {
     case Types.SAVE_PICTURE:
-      return [
+      return {
         ...state,
-        { id: action.payload.courseTag, tag: action.payload.courseTag, photos: [action.payload] },
-      ];
+        [action.payload.courseTag]: {
+          ...R.pathOr({}, [action.payload.courseTag])(state),
+          photos: [action.payload, ...R.pathOr([], [action.payload.courseTag, 'photos'])(state)],
+        },
+      };
     default:
       return state;
   }

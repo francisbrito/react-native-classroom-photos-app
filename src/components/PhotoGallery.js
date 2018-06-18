@@ -1,43 +1,14 @@
 /* @flow weak */
 
 import React from 'react';
-import { Image, View, Text, StyleSheet, SectionList, FlatList } from 'react-native';
+import { Image, View, Text, StyleSheet, SectionList, FlatList, ViewPropTypes } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
-
-const data = [
-  {
-    title: 'June 10th',
-    data: [
-      [
-        {
-          uri:
-            'https://images.unsplash.com/photo-1520658402001-b5960f9a6059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5670796b33630d3eff4b287840632a59&auto=format&fit=crop&w=2850&q=80',
-        },
-        {
-          uri:
-            'https://images.unsplash.com/photo-1520658402001-b5960f9a6059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5670796b33630d3eff4b287840632a59&auto=format&fit=crop&w=2850&q=80',
-        },
-        {
-          uri:
-            'https://images.unsplash.com/photo-1520658402001-b5960f9a6059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5670796b33630d3eff4b287840632a59&auto=format&fit=crop&w=2850&q=80',
-        },
-        {
-          uri:
-            'https://images.unsplash.com/photo-1520658402001-b5960f9a6059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5670796b33630d3eff4b287840632a59&auto=format&fit=crop&w=2850&q=80',
-        },
-        {
-          uri:
-            'https://images.unsplash.com/photo-1520658402001-b5960f9a6059?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5670796b33630d3eff4b287840632a59&auto=format&fit=crop&w=2850&q=80',
-        },
-      ],
-    ],
-  },
-];
 
 const PhotoListItem = ({ uri }) => (
   <View
@@ -55,6 +26,14 @@ const PhotoListItem = ({ uri }) => (
     <Image style={{ flex: 1 }} source={{ uri }} />
   </View>
 );
+
+PhotoListItem.propTypes = {
+  uri: PropTypes.string,
+};
+PhotoListItem.defaultProps = {
+  uri: null,
+};
+
 const PhotoList = ({ photos }) => (
   <FlatList
     numColumns={4}
@@ -63,13 +42,27 @@ const PhotoList = ({ photos }) => (
     renderItem={({ item }) => <PhotoListItem {...item} />}
   />
 );
+PhotoList.propTypes = {
+  photos: PropTypes.arrayOf(PropTypes.shape(PhotoListItem.propTypes)),
+};
+PhotoList.defaultProps = {
+  photos: [],
+};
+
 const PhotoGallerySectionHeader = ({ title }) => (
   <Text style={{ fontWeight: 'bold' }}>{title}</Text>
 );
+PhotoGallerySectionHeader.propTypes = {
+  title: PropTypes.string,
+};
+PhotoGallerySectionHeader.defaultProps = {
+  title: null,
+};
+
 const PhotoGallery = ({ sections, containerStyle }) => (
   <View style={[styles.container, containerStyle]}>
     <SectionList
-      sections={data}
+      sections={sections}
       contentContainerStyle={{
         paddingTop: 8,
         paddingBottom: 8,
@@ -82,5 +75,16 @@ const PhotoGallery = ({ sections, containerStyle }) => (
     />
   </View>
 );
+PhotoGallery.propTypes = {
+  sections: PropTypes.arrayOf(PropTypes.shapeOf({
+    title: PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape(PhotoListItem.propTypes))),
+  })),
+  containerStyle: ViewPropTypes.style,
+};
+PhotoGallery.defaultProps = {
+  sections: [],
+  containerStyle: null,
+};
 
 export default PhotoGallery;
